@@ -1,0 +1,33 @@
+/* Global Styles */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: bold;
+}
+
+.allert {
+/* Ми додали відстань зверху елемента: -top */
+  margin-top:10px;
+}
+
+#footer {
+  /* задаємо верхню межу елемента: ширига лінії, тип лінії, колір */
+  border-top:1px solid #dddddd;
+  /* задаємо внітрішню відстань улумента до верхнього краю */
+  padding-top: 10px;
+}
+/* Group Selector */
+#group-selector {
+  margin: 10px 0;
+}
+#group-selector select {
+margin:0;
+width:85%;
+background-color:#ffffff;
+border:1px solid #cccccc;
+height:30px;
+line-height:30px;
+color:#555555;
+}
+#c {
+text-align:center;
+}
+

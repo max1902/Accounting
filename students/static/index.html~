@@ -1,0 +1,174 @@
+<<<<<<< HEAD:students/static/index.html~
+<html lang="uk">
+
+<head>
+
+  <meta charset='UTF-8'/>
+  <title>Сервіс Обліку Студентів</title>
+  <meta name="description"
+        value="Система Обліку Студентів Навчального Закладу"/>
+
+  <!-- Latest compiled and minified CSS -->
+
+         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  	
+	<link rel="stylesheet" href="./css/main.css">
+</head>
+
+<body>
+
+<!-- Start Container -->
+  <div class="container">
+
+<!-- Start Header -->
+    <div class="row" id="header">
+=======
+{% extends "students/base.html" %}
+>>>>>>> add base template app project:students/templates/students/students_list.html~
+
+{% load static from staticfiles %}
+
+{% block meta_title %} Студенти {% endblock meta_title %}
+
+<<<<<<< HEAD:students/static/index.html~
+<!-- Start SubHeader -->
+    <div class="row" id="sub-header">
+      <div class="col-xs-12">
+	<ul class="nav nav-tabs" role="tablist">
+          <li role="presentation" class="active"><a href="#">Студенти</a></li>
+          <li role="presentation"><a href="#">Відвідування</a></li>
+	  <li role="presentation"><a href="#">Групи</a></li>
+	</ul>
+      </div>
+    </div>
+<!-- End SubHeader -->
+=======
+{% block title %}База Студентів{% endblock title %}
+>>>>>>> add base template app project:students/templates/students/students_list.html~
+
+{% block content %}
+
+<!-- Add Student Button -->
+	<a class="btn btn-primary" href="#">Додати Студента</a>
+<!-- End Student Button -->
+
+
+<!-- Start Students Listing -->
+
+	<table class="table">
+	  <thead>
+	    <tr>
+		<th><a href="#">№</a></th>
+		<th>Фото</th>
+		<th><a href="#">Прізвище &uarr</a></th>
+		<th><a href="#">Ім'я</a></th>
+		<th><a href="#">№ Білету</a></th>
+		<th>Дії</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	    <tr>
+		<td>1</td>
+		<td><img height="30" width="30" src="./img/1.jpg" class="img-circle"></td>
+		<td><a title="Редагувати" href="#">Корост</a></td>
+		<td><a title="Редагувати" href="#">Андрій</a></td>
+		<td>2123</td>
+		<td>
+		  <div class="dropdown">
+		    <button class="btn btn-default dropdown-toggle"
+		        type="button" data-toggle="dropdown">Дія
+		      <span class="caret"></span>
+		    </button>
+		    <ul class="dropdown-menu" role="menu">
+			<li role="presentation">
+			  <a role="menuitem" tabindex="-1"    			                href="#">Відвідування</a>
+			</li>
+			<li role="presentation">
+			  <a role="menuitem" tabindex="-1" 					href="#">Редагувати</a>
+			</li>
+			<li role="presentation">
+			<a role="menuitem" tabindex="-1" 
+				href="#">Видалити</a>
+			</li>	
+		    </ul>
+		  </div>	
+		</td>
+	    </tr>
+<<<<<<< HEAD:students/static/index.html~
+		<tr>
+		<td>1</td>
+		<td><img height="30" width="30" src="./img/2.jpg" class="img-circle"></td>
+		<td><a title="Редагувати" href="#">Проказа</a></td>
+		<td><a title="Редагувати" href="#">Максим</a></td>
+		<td>2000</td>
+		<td>
+		  <div class="dropdown">
+		    <button class="btn btn-default dropdown-toggle"
+		        type="button" data-toggle="dropdown">Дія
+		      <span class="caret"></span>
+		    </button>
+		    <ul class="dropdown-menu" role="menu">
+			<li role="presentation">
+			  <a role="menuitem" tabindex="-1"    			                href="#">Відвідування</a>
+			</li>
+			<li role="presentation">
+			  <a role="menuitem" tabindex="-1" 					href="#">Редагувати</a>
+			</li>
+			<li role="presentation">
+			<a role="menuitem" tabindex="-1" 
+				href="#">Видалити</a>
+			</li>	
+		    </ul>
+		  </div>	
+		</td>
+	    </tr>
+			<tr>
+		<td>1</td>
+		<td><img height="30" width="30" src="./img/3.jpg"></td>
+		<td><a title="Редагувати" href="#">Ольга</a></td>
+		<td><a title="Редагувати" href="#">Яроменко</a></td>
+		<td>2050</td>
+		<td>
+		  <div class="dropdown">
+		    <button class="btn btn-default dropdown-toggle"
+		        type="button" data-toggle="dropdown">Дія
+		      <span class="caret"></span>
+		    </button>
+		    <ul class="dropdown-menu" role="menu">
+			<li role="presentation">
+			  <a role="menuitem" tabindex="-1"    			                href="#">Відвідування</a>
+			</li>
+			<li role="presentation">
+			  <a role="menuitem" tabindex="-1" 					href="#">Редагувати</a>
+			</li>
+			<li role="presentation">
+			<a role="menuitem" tabindex="-1" 
+				href="#">Видалити</a>
+			</li>	
+		    </ul>
+		  </div>	
+		</td>
+=======
+>>>>>>> add base template app project:students/templates/students/students_list.html~
+	    </tr>
+	  </tbody>
+	</table>
+<!-- Start Navigation -->
+		<nav>
+		<ul class="pagination">
+		<li><a href="#">&laquo;</a></li>
+		<li><a href="#">1</a></li>
+		<li class="active"><a href="#">2</a></li>
+		<li><a href="#">3</a></li>
+		<li><a href="#">4</a></li>
+		<li><a href="#">5</a></li>
+		<li><a href="#">&raquo;</a></li>
+		</ul>
+		</nav>
+
+<!-- End Navigation -->
+
+<!-- End Students Listing -->	  	
+
+{% endblock content %}
+
