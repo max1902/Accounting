@@ -12,6 +12,16 @@ from ..models import Student
 
 def students_list(request):
     students = Student.objects.all()
+    #import pdb; pdb.set_trace()
+    # order_by sort
+    if request.path == '/':
+       students = students.order_by('last_name')
+    order_by = request.GET.get('order_by','')
+    if order_by in ('last_name','first_name','ticket','id'):
+        students = students.order_by(order_by)
+        if request.GET.get('reverse',''):
+            students = students.reverse()
+
     return render(request, 'students/students_list.html', {'students':students})
 
 def students_add(request):
