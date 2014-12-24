@@ -1,0 +1,14 @@
+*.pyc
+*.idea/
+local_settings.py
+nbproject
+*.txt~
+*.css~
+*.sql
+*.py~
+.gitignore~
+*.html~
+media/
+students/fixtures/
+students/tests.py
+
