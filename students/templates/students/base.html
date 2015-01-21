@@ -54,6 +54,7 @@
           <li role="presentation"  {% if '/visits' in request.path %} class="active"{% endif %}><a href="{% url 'visits' %}">Відвідування</a></li>
 	      <li role="presentation"  {% if '/groups' in request.path %} class="active"{% endif %}><a href="{% url 'groups' %}">Групи</a></li>
           <li role="presentation"  {% if '/exams' in request.path %} class="active"{% endif %}><a href="{% url 'exams' %}">Іспити</a></li>
+          <li role="presentation"  {% if '/result_exam' in request.path %} class="active"{% endif %}><a href="{% url 'result_list' %}">Резульати іспитів</a></li>
 	</ul>
       </div>
     </div>
