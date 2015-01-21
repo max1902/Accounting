@@ -1,0 +1,121 @@
+{% extends "students/base.html" %}
+
+{% load static from staticfiles %}
+
+{% block meta_title %} Іспити {% endblock meta_title %}
+
+{% block title %} Список іспитів {% endblock title %}
+
+{% block content %}
+
+<!-- Add Group Button -->
+	<a class="btn btn-primary" href="{% url 'exams_add' %}">Додати іспит</a>
+<!-- End Group Button -->
+
+<!-- Start Groups Listing -->
+
+	<table class="table">
+    {% with order_by=request.GET.order_by reverse=request.GET.reverse  %}
+	  <thead>
+	    <tr>
+		<th>
+            <a href="{% url "exams" %}?order_by=id{% if order_by == 'id' and reverse != '1' %}&amp;reverse=1{% endif %}">
+            №
+            {% if order_by == 'id' and reverse != '1' %}&uarr;
+            {% elif order_by == 'id' and reverse == '1' %}&darr;
+            {% endif %}
+            </a>
+        </th>
+		<th>
+            <a href="{% url "exams" %}?order_by=name_subject{% if order_by == 'name_subject' and reverse != '1' and request.path == '/exams/' %}&amp;reverse=1{% endif %}">
+            Назва предмету
+            {% if request.path == '/exams/' and reverse != '1'  %}&uarr;
+            {% elif order_by == 'name_subject' and reverse != '1' %}&uarr;
+            {% elif order_by == 'name_subject' and reverse == '1' %}&darr;
+            {% endif %}
+            </a>
+        </th>
+		<th>
+            <a href="{% url "exams" %}?order_by=teacher{% if order_by == 'teacher' and reverse != '1' %}&amp;reverse=1{% endif %}">
+            Викладач
+            {% if order_by == 'teacher' and reverse != '1' %}&uarr;
+            {% elif order_by == 'teacher' and reverse == '1' %}&darr;
+            {% endif %}
+            </a>
+        </th>
+        <th>
+            <a href="{% url "exams" %}?order_by=time_exam{% if order_by == 'time_exam' and reverse != '1' %}&amp;reverse=1{% endif %}">
+            Дата та час проведення
+            {% if order_by == 'time_exam' and reverse != '1' %}&uarr;
+            {% elif order_by == 'time_exam' and reverse == '1' %}&darr;
+            {% endif %}
+            </a>
+        </th>
+        <th>
+            <a href="{% url "exams" %}?order_by=name_group{% if order_by == 'name_group' and reverse != '1' %}&amp;reverse=1{% endif %}">
+            Назва групи
+            {% if order_by == 'name_group' and reverse != '1' %}&uarr;
+            {% elif order_by == 'name_group' and reverse == '1' %}&darr;
+            {% endif %}
+            </a>
+        </th>
+	    </tr>
+	  </thead>
+	{% endwith %}
+	<tbody>
+   		{% for exam in exams %}
+	    <tr>
+		<td>{{ forloop.counter }}</td>
+		<td><a title="Редагувати" href="{% url 'exams_edit' exam.id %}">{{ exam.name_subject }}</a></td>
+		<td><a title="Редагувати" href="{% url 'exams_edit' exam.id %}">{{ exam.teacher }}</a></td>
+        <td><a title="Редагувати" href="{% url 'exams_edit' exam.id %}">{{ exam.time_exam }}</a></td>
+        <td><a title="Редагувати" href="{% url 'exams_edit' exam.id %}">{{ exam.name_group }}</a></td>
+		<td>
+		  <div class="dropdown">
+		    <button class="btn btn-default dropdown-toggle"
+		        type="button" data-toggle="dropdown">Дія
+		      <span class="caret"></span>
+		    </button>
+		    <ul class="dropdown-menu" role="menu">
+			<li role="presentation">
+			  <a role="menuitem" tabindex="-1"  href="#">Відвідування</a>
+			</li>
+			<li role="presentation">
+			  <a role="menuitem" tabindex="-1"  href="{% url 'exams_edit' exam.id %}">Редагувати</a>
+			</li>
+			<li role="presentation">
+			  <a role="menuitem" tabindex="-1"  href="{% url 'exams_edit' exam.id %}">Видалити</a>
+			</li>
+		    </ul>
+		  </div>
+		</td>
+	    </tr>
+
+{% endfor %}
+	  </tbody>
+</table>
+{% if exams.has_other_pages %}
+{% with order_by=request.GET.order_by reverse=request.GET.reverse %}
+<nav>
+<ul class="pagination">
+{% if exams.has_previous %}
+<li><a href="{% url 'exams' %}?page={{exams.previous_page_number}}&amp;order_by={{ order_by }}&amp;reverse={{ reverse }}">&laquo;</a></li>
+{% else %}
+<li class="disabled"><a href="">&laquo;</a></li>
+{% endif %}
+{% for p in exams.paginator.page_range %}
+<li {% if exams.number == p %} class="active" {% endif %}>
+<a href="{% url 'exams' %}?page={{ p }}&amp;order_by={{ order_by }}&amp;reverse={{ reverse }}">{{ p }}</a>
+</li>
+{% endfor %}
+{% if exams.has_next %}
+<li><a href="{% url 'exams' %}?page={{exams.next_page_number}}&amp;order_by={{ order_by }}&amp;reverse={{ reverse }}">&raquo;</a></li>
+{% else %}
+<li class="disabled"><a href="">&raquo;</a></li>
+{% endif %}
+</ul>
+</nav>
+{% endwith %}
+{% endif %}
+<!-- End Students Listing -->
+{% endblock content %}

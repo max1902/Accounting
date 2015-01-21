@@ -52,7 +52,8 @@
        {% url "home" as root_path %}
           <li role="presentation"  {% if request.path == root_path %} class="active"{% endif %}><a href="{% url "home"  %}">Студенти</a></li>
           <li role="presentation"  {% if '/visits' in request.path %} class="active"{% endif %}><a href="{% url 'visits' %}">Відвідування</a></li>
-	  <li role="presentation"  {% if '/groups' in request.path %} class="active"{% endif %}><a href="{% url 'groups' %}">Групи</a></li>
+	      <li role="presentation"  {% if '/groups' in request.path %} class="active"{% endif %}><a href="{% url 'groups' %}">Групи</a></li>
+          <li role="presentation"  {% if '/exams' in request.path %} class="active"{% endif %}><a href="{% url 'exams' %}">Іспити</a></li>
 	</ul>
       </div>
     </div>

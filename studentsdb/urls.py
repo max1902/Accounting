@@ -30,7 +30,14 @@ urlpatterns = patterns('',
     url(r'^visits/(?P<mid>\d+)/edit/$', 'students.views.visits.visits_edit',
            name='visits_edit'),
     
-    
+    #exams
+    url(r'^exams/$', 'students.views.exams.exams_list', name='exams'),
+    url(r'^exams/add/$', 'students.views.exams.exams_add',
+           name='exams_add'),
+    url(r'^exams/(?P<vid>\d+)/edit/$', 'students.views.exams.exams_edit',
+           name='exams_edit'),
+    url(r'^exams/(?P<vid>\d+)/delete/$', 'students.views.exams.exams_delete',
+           name='exams_delete'),
 
     url(r'^admin/', include(admin.site.urls)),
 
