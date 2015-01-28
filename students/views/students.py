@@ -9,7 +9,7 @@ from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from datetime import datetime
 from PIL import Image
-
+from django.contrib import messages
 
 
 # Views for Students
@@ -42,6 +42,15 @@ def students_list(request):
 
     return render(request, 'students/students_list.html', {'students':students})
 
+
+
+#FIRST_NAME = 45
+#LAST_NAME = 55
+#BIRTHDAY = 65
+#TICKET = 75
+#STUDENT_GROUP = 85
+#PHOTO = 95
+
 def students_add(request):
     # was form posted?
     if request.method == "POST":
@@ -57,39 +66,47 @@ def students_add(request):
             #validate user input
             first_name = request.POST.get('first_name','').strip()
             if not first_name:
+                #messages.add_message(request, FIRST_NAME, u"Ім'я є обов'язковим")
                 errors['first_name'] = u"Ім'я є обов'язковим"
             else:
                 data['first_name'] = first_name
 
             last_name = request.POST.get('last_name','').strip()
             if not last_name:
+                #messages.add_message(request, LAST_NAME, u"Прізвище є обов'язковим")
                 errors['last_name'] = u"Прізвище є обов'язковим"
             else:
                 data['last_name'] = last_name
 
             birthday = request.POST.get('birthday','').strip()
             if not birthday:
+                #messages.add_message(request, BIRTHDAY, u"Дата народження є обов'язковою")
                 errors['birthday'] = u"Дата народження є обов'язковою"
             else:
                 try:
                     datetime.strptime(birthday, '%Y-%m-%d')
                 except Exception:
+                    #messages.add_message(request, BIRTHDAY,
+                     #      u"Введіть коректний формат дати (напр. 1984-12-30)")
                     errors['birthday'] = u"Введіть коректний формат дати (напр. 1984-12-30)"
                 else:
                     data['birthday'] = birthday
 
             ticket = request.POST.get('ticket','').strip()
             if not ticket:
-                errors['ticket'] = u"Номер білету є обов'язковим"
+                #messages.add_message(request, TICKET, u"Номер білета є обов'язковим")
+                errors['ticket'] = u"Номер білета є обов'язковим"
             else:
                 data['ticket'] = ticket
 
             student_group = request.POST.get('student_group','').strip()
             if not student_group:
+                #messages.add_message(request, STUDENT_GROUP, u"Оберіть групу для студента")
                 errors['student_group'] = u"Оберіть групу для студента"
             else:
                 groups = Group.objects.filter(pk=student_group)
                 if len(groups) != 1:
+                    #messages.error(request, u"Оберіть коректну групу")
                     errors['student_group'] = u"Оберіть коректну групу"
                 else:
                     data['student_group'] = groups[0]
@@ -97,6 +114,7 @@ def students_add(request):
             photo = request.FILES.get('photo','')
             if photo:
                 try:
+                    #import pdb; pdb.set_trace()
                     img = Image.open(photo)
                     file_size = request.FILES['photo'].size
 
@@ -104,12 +122,20 @@ def students_add(request):
                         if file_size < 2 * 1024 * 1024:
                             data['photo'] = photo
                         else:
+                     #       messages.add_message(request, PHOTO,
+                    #u'Розмір файлу зображення неможе перевищувати 2Мб')
                             errors['photo'] = u'Розмір файлу зображення неможе\
                                       перевищувати 2Мб'
                     else:
+                      #  messages.add_message(request, PHOTO,
+                    #u'Невірний формат зображення напр.\
+                                      #(*.bmp, *.png або *.jpeg)')
                         errors['photo'] = u'Невірний формат зображення напр.\
                                       (*.bmp, *.png або *.jpeg)'
                 except Exception:
+                    #messages.add_message(request, PHOTO,
+                    #u'Невірний формат зображення напр.\
+                     #                 (*.bmp, *.png або *.jpeg)')
                     errors['photo'] = u'Невірний формат зображення напр.\
                                       (*.bmp, *.png або *.jpeg)'
 
@@ -117,9 +143,10 @@ def students_add(request):
             if not errors:
                 student = Student(**data)
                 student.save()
-
+                #messages.info(request, 'Yo! There are new comments on your photo!')
                 #redirect to students list
-                return HttpResponseRedirect(reverse('home'))
+                return HttpResponseRedirect(
+            u'%s?status_message=Студента %s %s успішно додано! ' % (reverse('home'), student.first_name, student.last_name))
             else:
                 #render form with errors and previous  user input
                 return render(request, 'students/students_add.html',
@@ -128,7 +155,8 @@ def students_add(request):
 
         elif request.POST.get('cancel_button') is not None:
             # redirect to home page on cancel button
-            return HttpResponseRedirect(reverse('home'))
+            return HttpResponseRedirect(
+        u'%s?status_message=Додавання студента скасовано!' % reverse('home'))
     else:
         # initial form render
         return render(request, 'students/students_add.html', {'groups': Group.objects.all().order_by('title')})

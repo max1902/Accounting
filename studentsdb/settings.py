@@ -75,6 +75,12 @@ USE_L10N = True
 
 USE_TZ = True
 
+#MESSAGE_TAGS = {45: 'first_name',
+#                55: 'last_name',
+#                65: 'birthday',
+#                75: 'ticket',
+#                85: 'student_group',
+#                95: 'photo'}
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/

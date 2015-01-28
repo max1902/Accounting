@@ -30,4 +30,9 @@ color:#555555;
 #c {
 text-align:center;
 }
-
+/* Form Styles */
+textarea,
+select,
+input {
+    max-width: 300px;
+}
