@@ -51,10 +51,11 @@
 	<ul class="nav nav-tabs" role="tablist">
        {% url "home" as root_path %}
           <li role="presentation"  {% if request.path == root_path %} class="active"{% endif %}><a href="{% url "home"  %}">Студенти</a></li>
-          <li role="presentation"  {% if '/visits' in request.path %} class="active"{% endif %}><a href="{% url 'visits' %}">Відвідування</a></li>
-	      <li role="presentation"  {% if '/groups' in request.path %} class="active"{% endif %}><a href="{% url 'groups' %}">Групи</a></li>
-          <li role="presentation"  {% if '/exams' in request.path %} class="active"{% endif %}><a href="{% url 'exams' %}">Іспити</a></li>
-          <li role="presentation"  {% if '/result_exam' in request.path %} class="active"{% endif %}><a href="{% url 'result_list' %}">Резульати іспитів</a></li>
+          <li role="presentation"  {% if '/visits' in request.path %} class="active"{% endif %}><a href="{% url "visits" %}">Відвідування</a></li>
+	      <li role="presentation"  {% if '/groups' in request.path %} class="active"{% endif %}><a href="{% url "groups" %}">Групи</a></li>
+          <li role="presentation"  {% if '/exams' in request.path %} class="active"{% endif %}><a href="{% url "exams" %}">Іспити</a></li>
+          <li role="presentation"  {% if '/result_exam' in request.path %} class="active"{% endif %}><a href="{% url "result_list" %}">Резульати іспитів</a></li>
+          <li role="presentation"  {% if '/contact-admin' in request.path %} class="active"{% endif %}><a href="{% url "contact_admin" %}">Контакт</a></li>
 	</ul>
       </div>
     </div>
@@ -66,13 +67,16 @@
 	<div class="col-xs-12" id="content-column">
 
         
-	
-	{% block status_message %}
-    {% if request.GET.status_message %}
-    <div class="alert alert-warning" role="alert">{{ request.GET.status_message }}
-    </div>
-    {% endif %}
-    {% endblock %}
+
+     <!-- Section message -->
+     {% block status_message %}
+     {% if messages %}
+         {% for message in messages %}<div class="alert alert-warning">{{ message }}</div>{% endfor %}
+     {% endif %}
+     {% endblock %}
+<!-- End section message -->
+
+
 
 
 

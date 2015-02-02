@@ -1,0 +1,19 @@
+{% extends "students/base.html" %}
+{% load static from staticfiles %}
+{% load crispy_forms_tags %}
+{% block meta_title%}Додати Студента{% endblock meta_title%}
+{% block title %}Додати Студента{% endblock title %}
+{% block status_message %}
+{% if errors %}
+<div class="alert alert-warning" role="alert">
+Будь-ласка, виправте наступні помилки
+</div>
+{% endif %}
+{% endblock status_message %}
+    {% block content %}
+    {% crispy form %}<br>
+    {% if ADD %}
+    <br>
+    <div><a href={% url "home" %}>Повернутися на головну сторінку</a></div>
+    {% endif %}
+{% endblock content%}
