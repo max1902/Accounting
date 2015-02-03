@@ -8,7 +8,7 @@ from datetime import datetime
 from PIL import Image
 from django.contrib import messages
 
-from django.views.generic import UpdateView, CreateView
+from django.views.generic import UpdateView, CreateView, DeleteView
 from ..models.students import Student
 from ..models.groups import Group
 
@@ -122,8 +122,16 @@ class StudentAddView(CreateView):
         else:
             return super(StudentAddView, self).post(request, *args, **kwargs)
 
+class StudentDeleteView(DeleteView):
+    model = Student
+    template_name = 'students/students_confirm_delete.html'
+    success_msg = u'Студента успішно видалено!'
 
-##############################MANUAL####################################
+    def get_success_url(self):
+        messages.success(self.request, self.success_msg)
+        return u'%s?status_message=Студента успішно видалено!' % reverse('home')
+
+
 def students_list(request):
     students = Student.objects.all()
     #import pdb; pdb.set_trace()
