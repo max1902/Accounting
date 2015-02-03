@@ -9,6 +9,10 @@ from django.forms import ModelForm, ValidationError
 # Register your models here.
 
 
+
+
+#xdsvfsd
+
 class StudentFormAdmin(ModelForm):
     def clean_student_group(self):
         """Check if student is leader in any group.
