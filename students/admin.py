@@ -44,16 +44,35 @@ class StudentAdmin(admin.ModelAdmin):
 
 
 
+class GroupAdmin(admin.ModelAdmin):
+    list_display = ['title', 'leader']
+    list_display_links = ['title', 'leader']
+    #list_editable = ['leader']
+    ordering = ['title']
+    list_filter = ['title']
+    list_per_page = 5
+    search_fields = ['title', 'leader']
 
+    def view_on_site(self, obj):
 
+        return reverse('groups_edit', kwargs={'pk':obj.id})
 
+class ExamAdmin(admin.ModelAdmin):
+    list_display = ['name_subject', 'name_group', 'teacher']
+    list_display_links = ['name_subject', 'teacher']
+    list_editable = ['name_group']
+    ordering = ['teacher']
+    list_filter = ['teacher']
+    list_per_page = 5
+    search_fields = ['teacher', 'name_subject']
 
+    def view_on_site(self, obj):
 
-
+        return reverse('exams_edit', kwargs={'pk':obj.id})
 
 
 
 admin.site.register(Student,StudentAdmin)
-admin.site.register(Group)
-admin.site.register(Exam)
+admin.site.register(Group,GroupAdmin)
+admin.site.register(Exam,ExamAdmin)
 admin.site.register(Result)
