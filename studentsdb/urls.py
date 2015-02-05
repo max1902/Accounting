@@ -13,7 +13,7 @@ urlpatterns = patterns('',
            name='students_add'),
     url(r'^students/(?P<pk>\d+)/edit/$', StudentUpdateView.as_view(),
            name='students_edit'),
-    url(r'^students/(?P<pk>\d+)/delete/$', StudentDeleteView.as_view(),
+    url(r'^students/(?P<pk>\d+)/delete/$', 'students.views.students.student_del',
            name='students_delete'),
     # url(r'^blog/', include('blog.urls')),
     

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -407,3 +407,12 @@ def students_add(request):
     else:
         # initial form render
         return render(request, 'students/students_add.html', {'groups': Group.objects.all().order_by('title')})
+
+
+def student_del(request, pk):
+    student = get_object_or_404(Student, pk=pk)
+    #success_msg = u'Студента успішно видалено!'
+    student.delete()
+    #messages.success(request, success_msg)
+    return HttpResponseRedirect( reverse('home'))
+

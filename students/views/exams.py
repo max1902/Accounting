@@ -171,11 +171,6 @@ class ExamDeleteView(DeleteView):
         return u'%s?status_message=Екзамен успішно видалено!' % reverse('home')
 
 
-
-
-
-
-
 def exams_list(request):
     exams = Exam.objects.all()
     exams = exams.order_by('time_exam')
@@ -197,11 +192,3 @@ def exams_list(request):
         exams = paginator.page(paginator.num_pages)
     return render(request, 'students/exams_list.html', {'exams': exams})
 
-def exams_add(request):
-    return HttpResponse('<h1>Exam Add Form</h1>')
-
-def exams_edit(request, vid):
-    return HttpResponse('<h1>Edit Exam %s</h1>' % vid)
-
-def exams_delete(request, vid):
-    return HttpResponse('<h1>Delete Exam %s</h1>' % vid)
