@@ -26,6 +26,21 @@ class StudentFormAdmin(ModelForm):
 
 
 
+class GroupFormAdmin(ModelForm):
+
+    def clean_leader(self):
+        
+        st = Student.objects.filter(student_group=self.instance)
+        if self.cleaned_data['leader'] not in list(st):
+            raise ValidationError(u'Староста повинен бути у своїй групі.',
+                    code='invalid')
+        return self.cleaned_data['leader']
+        
+        
+        
+        
+
+
 
 
 class StudentAdmin(admin.ModelAdmin):
@@ -52,6 +67,7 @@ class GroupAdmin(admin.ModelAdmin):
     list_filter = ['title']
     list_per_page = 5
     search_fields = ['title', 'leader']
+    form = GroupFormAdmin
 
     def view_on_site(self, obj):
 

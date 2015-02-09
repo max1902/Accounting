@@ -12,7 +12,7 @@ from django.views.generic import UpdateView, CreateView, DeleteView
 from ..models.students import Student
 from ..models.groups import Group
 
-from django.forms import ModelForm
+from django.forms import ModelForm, ValidationError
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 from crispy_forms.bootstrap import FormActions
@@ -60,6 +60,15 @@ class StudentForm(ModelForm):
             submit,
             Submit('cancel_button', u'Скасувати', css_class="btn btn-link"),
         )
+    def clean_student_group(self):
+        """Check if student is leader in any group.
+        If yes, then ensure it's the same as selected group."""
+        # get group where current student is a leader
+        groups = Group.objects.filter(leader=self.instance)
+        if len(groups) > 0 and self.cleaned_data['student_group'] != groups[0]:
+            raise ValidationError(u'Студент є старостою іншої групи.',
+                    code='invalid')
+        return self.cleaned_data['student_group']
 ##############################UPDATE STUDENT####################################
 #class StudentUpdateForm(ModelForm):
 #    class Meta:
@@ -410,9 +419,13 @@ def students_add(request):
 
 
 def student_del(request, pk):
-    student = get_object_or_404(Student, pk=pk)
-    #success_msg = u'Студента успішно видалено!'
-    student.delete()
-    #messages.success(request, success_msg)
-    return HttpResponseRedirect( reverse('home'))
+    if request.method == "POST":
+        student = get_object_or_404(Student, pk=pk)
+        student.delete()
+        return HttpResponseRedirect(reverse('home'))
+    elif request.method == "GET":
+        student = Student.objects.get(id=pk)
+        return render(request, 'students/students_delete.html',{'student':student})
+    else:
+        return HttpResponseRedirect( reverse('home'))
 

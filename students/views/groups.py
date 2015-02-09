@@ -9,9 +9,10 @@ from django.views.generic import UpdateView, CreateView, DeleteView
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from ..models.groups import Group
+from ..models.students import Student
 from django.contrib import messages
 from django.db.models.deletion import ProtectedError
-from django.forms import ModelForm
+from django.forms import ModelForm, ValidationError
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 from crispy_forms.bootstrap import FormActions
@@ -58,18 +59,13 @@ class GroupForm(ModelForm):
             submit,
             Submit('cancel_button', u'Скасувати', css_class="btn btn-link"),
         )
-    def clean_student_group(self):
-        """Check if student is leader in any group.
-        If yes, then ensure it's the same as selected group."""
-        # get group where current student is a leader
-#        students = Student.objects.all()
-#        if students.first_name in self.cleaned_data['title']:
-#            raise ValidationError(u'Студент все ще є у групі.', code='invalid')
-        groups = Group.objects.filter(leader=self.instance)
-        if len(groups) > 0 and self.cleaned_data['student_group'] != groups[0]:
-            raise ValidationError(u'Студент є старостою іншої групи.',
+    def clean_leader(self):
+
+        st = Student.objects.filter(student_group=self.instance)
+        if self.cleaned_data['leader'] not in list(st):
+            raise ValidationError(u'Староста повинен бути у своїй групі.',
                     code='invalid')
-        return self.cleaned_data['student_group']
+        return self.cleaned_data['leader']
 
 
 
