@@ -11,6 +11,8 @@ from crispy_forms.layout import Submit
 from crispy_forms.bootstrap import FormActions
 from django.views.generic import UpdateView, CreateView, DeleteView
 
+from ..util import paginate
+
 #class ExamUpdateForm(ModelForm):
 #    class Meta:
 #        model = Exam
@@ -156,11 +158,6 @@ class ExamAddView(CreateView):
             return super(ExamAddView, self).post(request, *args, **kwargs)
 
 
-
-
-
-
-
 class ExamDeleteView(DeleteView):
     model = Exam
     template_name = 'students/exams_confirm_delete.html'
@@ -182,13 +179,6 @@ def exams_list(request):
         if request.GET.get('reverse', '') == '1':
             exams = exams.reverse()
 
-    paginator = Paginator(exams, 3)
-    page = request.GET.get('page')
-    try:
-        exams = paginator.page(page)
-    except PageNotAnInteger:
-        exams = paginator.page(1)
-    except EmptyPage:
-        exams = paginator.page(paginator.num_pages)
-    return render(request, 'students/exams_list.html', {'exams': exams})
+    context = paginate(exams,3,request,{}, var_name='exams')
+    return render(request, 'students/exams_list.html', context)
 

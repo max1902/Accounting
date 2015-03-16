@@ -60,7 +60,13 @@
 	  <tbody>
              	{% for student in students %}
 	    <tr>
-		<td>{{ forloop.counter }}</td>
+		<td>
+        {% if is_paginated %}
+        {{ page_obj.start_index|add:forloop.counter0 }}
+        {% else %}
+        {{ forloop.counter }}
+        {% endif %}
+        </td>
                  
 	<td>	
                     {% if student.photo %}
@@ -82,7 +88,7 @@
 		    </button>
 		    <ul class="dropdown-menu" role="menu">
 			<li role="presentation">
-			  <a role="menuitem" tabindex="-1" href="/journal/1">Відвідування</a>
+			  <a role="menuitem" tabindex="-1" href="{% url "journal" student.id %}">Відвідування</a>
 			</li>
 			<li role="presentation">
 			  <a role="menuitem" tabindex="-1" href="{% url 'students_edit' student.id %}">Редагувати</a>
@@ -99,26 +105,9 @@
 	  </tbody>
 	</table>
 <!-- Start Navigation -->
-{% if students.has_other_pages %}
-{% with order_by=request.GET.order_by reverse=request.GET.reverse %}
-		<nav>
-		<ul class="pagination">
-		<li><a href="{% url "home" %}?page=1&amp;order_by={{ order_by }}&amp;reverse={{ reverse }}">&laquo;</a></li>
-        {% for p in students.paginator.page_range %}
-		<li {% if students.number == p %}class="active"{% endif %}>
-          <a href="{% url "home" %}?page={{ p }}&amp;order_by={{ order_by }}&amp;reverse={{ reverse }}">{{ p }}</a>
-        </li>
-        {% endfor %}
-		<li>
-            <a href="{% url "home" %}?page={{ students.paginator.num_pages }}&amp;order_by={{ order_by }}&amp;reverse={{ reverse }}">&raquo;</a>
-        </li>
-		</ul>
-		</nav>
+{% with object_list=students %}
+{% include "students/pagination.html" %}
 {% endwith %}
-{% endif %}
-<!-- End Navigation -->
-
-<!-- End Students Listing -->	  	
 
 {% endblock content %}
 

@@ -31,7 +31,13 @@
 	<tbody>
    		{% for result in results %}
 	    <tr>
-		<td>{{ forloop.counter }}</td>
+		<td>
+            {% if is_paginated %}
+                {{ page_obj.start_index|add:forloop.counter0 }}
+            {% else %}
+                {{ forloop.counter }}
+            {% endif %}
+        </td>
 		<td><a title="Редагувати" href="">{{ result.examname }}</a></td>
 		<td><a title="Редагувати" href="">{{ result.stud.first_name }}  {{ result.stud.last_name }}</a></td>
         <td><a title="Редагувати" href="">{{ result.grade }}</a></td>
@@ -40,5 +46,8 @@
 {% endfor %}
 	  </tbody>
 </table>
+{% with object_list=results %}
+{% include "students/pagination.html" %}
+{% endwith %}
 <!-- End Students Listing -->
 {% endblock content %}

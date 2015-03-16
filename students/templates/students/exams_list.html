@@ -65,7 +65,13 @@
 	<tbody>
    		{% for exam in exams %}
 	    <tr>
-		<td>{{ forloop.counter }}</td>
+		<td>
+            {% if is_paginated %}
+                {{ page_obj.start_index|add:forloop.counter0 }}
+            {% else %}
+                {{ forloop.counter }}
+            {% endif %}
+        </td>
 		<td><a title="Редагувати" href="{% url 'exams_edit' exam.id %}">{{ exam.name_subject }}</a></td>
 		<td><a title="Редагувати" href="{% url 'exams_edit' exam.id %}">{{ exam.teacher }}</a></td>
         <td><a title="Редагувати" href="{% url 'exams_edit' exam.id %}">{{ exam.time_exam }}</a></td>
@@ -94,28 +100,8 @@
 {% endfor %}
 	  </tbody>
 </table>
-{% if exams.has_other_pages %}
-{% with order_by=request.GET.order_by reverse=request.GET.reverse %}
-<nav>
-<ul class="pagination">
-{% if exams.has_previous %}
-<li><a href="{% url 'exams' %}?page={{exams.previous_page_number}}&amp;order_by={{ order_by }}&amp;reverse={{ reverse }}">&laquo;</a></li>
-{% else %}
-<li class="disabled"><a href="">&laquo;</a></li>
-{% endif %}
-{% for p in exams.paginator.page_range %}
-<li {% if exams.number == p %} class="active" {% endif %}>
-<a href="{% url 'exams' %}?page={{ p }}&amp;order_by={{ order_by }}&amp;reverse={{ reverse }}">{{ p }}</a>
-</li>
-{% endfor %}
-{% if exams.has_next %}
-<li><a href="{% url 'exams' %}?page={{exams.next_page_number}}&amp;order_by={{ order_by }}&amp;reverse={{ reverse }}">&raquo;</a></li>
-{% else %}
-<li class="disabled"><a href="">&raquo;</a></li>
-{% endif %}
-</ul>
-</nav>
+{% with object_list=exams %}
+{% include "students/pagination.html" %}
 {% endwith %}
-{% endif %}
 <!-- End Students Listing -->
 {% endblock content %}

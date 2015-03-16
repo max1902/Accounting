@@ -5,10 +5,15 @@ from django.http import HttpResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from ..models.exam import Exam
 from ..models.result import Result
+from ..models.students import Student
+
+from ..util import paginate
 
 
 
 
 def result_list(request):
     results = Result.objects.all()
-    return render(request, 'students/result_list.html', {'results': results})
+
+    context = paginate(results, 5, request, {}, var_name='results')
+    return render(request, 'students/result_list.html', context)
