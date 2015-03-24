@@ -1,8 +1,8 @@
 {% load static from staticfiles %}
+<!DOCTYPE html>
 <html lang="uk">
 
 <head>
-
   <meta charset='UTF-8'/>
   <title>Сервіс Обліку Студентів - {% block meta_title %}{% endblock meta_title %}</title>
   <meta name="description"
@@ -19,7 +19,6 @@
 
 
 </head>
-
 <body>
 
 <!-- Start Container -->
@@ -36,11 +35,14 @@
 <!-- Groups Selector -->
       <div class="col-xs-4" id="group-selector">
         <strong>Група:</strong>
-	<select>
-	  <option value="">Усі студенти</option>
-	  <option value="">МтМ - 21, Подоба Віталій (No 254)</option>
-	  <option value="">МтМ - 22, Корост Андрій (No 2123)</option>
-	</select>
+          <select>
+	        <option value="">Усі студенти</option>
+            {% for group in GROUPS %}
+            <option value="{{ group.id }}"{% if group.selected %}selected="1"
+            {% endif %}> {{ group.title }}{% if group.leader %},
+            {{ group.leader }}{% endif %} </option>
+            {% endfor %}
+          </select>
       </div>
     </div>
 <!-- End Header -->
@@ -106,7 +108,7 @@
   
  <!-- Optional: Include the jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-
+    <script src="{% static "js/jquery.cookie.js" %}"></script>
  <!-- Optional: Incorporate the Bootstrap JavaScript plugins -->
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <script src="{% static "js/main.js" %}"></script>

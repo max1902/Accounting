@@ -19,7 +19,9 @@ class StudentFormAdmin(ModelForm):
         """Check if student is leader in any group.
             If yes, then ensure it's the same as selected group."""
         # get group where current student is a leader
+        #import pdb; pdb.set_trace()
         groups = Group.objects.filter(leader=self.instance)
+        print groups
         if len(groups) > 0 and self.cleaned_data['student_group'] != groups[0]:
             raise ValidationError(u'Студент є старостою іншої групи.',
                     code='invalid')
@@ -30,11 +32,12 @@ class StudentFormAdmin(ModelForm):
 class GroupFormAdmin(ModelForm):
 
     def clean_leader(self):
-        
+        #import pdb; pdb.set_trace()
         st = Student.objects.filter(student_group=self.instance)
         if self.cleaned_data['leader'] not in list(st):
             raise ValidationError(u'Староста повинен бути у своїй групі.',
                     code='invalid')
+            return self.cleaned_data['None']
         return self.cleaned_data['leader']
         
         

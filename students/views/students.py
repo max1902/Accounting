@@ -17,7 +17,7 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 from crispy_forms.bootstrap import FormActions
 
-from ..util import paginate
+from ..util import paginate, get_current_group
 
 
 # Views for Students
@@ -72,31 +72,6 @@ class StudentForm(ModelForm):
                     code='invalid')
         return self.cleaned_data['student_group']
 ##############################UPDATE STUDENT####################################
-#class StudentUpdateForm(ModelForm):
-#    class Meta:
-#        model = Student
-#    def __init__(self, *args, **kwargs):
-#        super(StudentUpdateForm, self).__init__(*args, **kwargs)
-#
-#        self.helper = FormHelper(self)
-#
-#        # set form tag attributes
-#        self.helper.form_action = reverse('students_edit',
-#            kwargs={'pk': kwargs['instance'].id})
-#        self.helper.form_method = 'POST'
-#        self.helper.form_class = 'form-horizontal'
-#
-#        # set form field properties
-#        self.helper.help_text_inline = True
-#        self.helper.html5_required = True
-#        self.helper.label_class = 'col-sm-2 control-label'
-#        self.helper.field_class = 'col-sm-10'
-#
-#        # add buttons
-#        self.helper.layout[-1] = FormActions(
-#            Submit('add_button', u'Зберегти', css_class="btn btn-primary"),
-#            Submit('cancel_button', u'Скасувати', css_class="btn btn-link"),
-#                                            )
 
 class StudentUpdateView(UpdateView):
     model = Student
@@ -120,31 +95,6 @@ class StudentUpdateView(UpdateView):
 
 
 ##############################CREATE STUDENT####################################
-#class StudentAddForm(ModelForm):
-#    class Meta:
-#        model = Student
-#    def __init__(self, *args, **kwargs):
-#        super(StudentAddForm, self).__init__(*args, **kwargs)
-#
-#        self.helper = FormHelper(self)
-#
-#        # set form tag attributes
-#        self.helper.form_action = reverse('students_add')
-#        self.helper.form_method = 'POST'
-#        self.helper.form_class = 'form-horizontal'
-#
-#        # set form field properties
-#        self.helper.help_text_inline = True
-#        self.helper.html5_required = True
-#        self.helper.label_class = 'col-sm-2 control-label'
-#        self.helper.field_class = 'col-sm-10'
-#
-#        # add buttons
-#        self.helper.layout[-1] = FormActions(
-#            Submit('add_button', u'Додати', css_class="btn btn-primary"),
-#            Submit('cancel_button', u'Скасувати', css_class="btn btn-link"),
-#                                            )
-
 
 class StudentAddView(CreateView):
     model = Student
@@ -193,11 +143,13 @@ class StudentDeleteView(DeleteView):
 
 def students_list(request):
 
-    students = Student.objects.all()
+    current_group = get_current_group(request)
+    if current_group:
+        students = Student.objects.filter(student_group=current_group)
+    else:
+        students = Student.objects.all()
     #import pdb; pdb.set_trace()
     # order_by sort
-    if request.path == '/':
-       students = students.order_by('last_name')
     order_by = request.GET.get('order_by','')
     if order_by in ('last_name','first_name','ticket','id'):
         students = students.order_by(order_by)

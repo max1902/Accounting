@@ -10,34 +10,9 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 from crispy_forms.bootstrap import FormActions
 from django.views.generic import UpdateView, CreateView, DeleteView
+from ..models.students import Student
 
-from ..util import paginate
-
-#class ExamUpdateForm(ModelForm):
-#    class Meta:
-#        model = Exam
-#    def __init__(self, *args, **kwargs):
-#        super(ExamUpdateForm, self).__init__(*args, **kwargs)
-#
-#        self.helper = FormHelper(self)
-#
-#        # set form tag attributes
-#        self.helper.form_action = reverse('exams_edit',
-#            kwargs={'pk': kwargs['instance'].id})
-#        self.helper.form_method = 'POST'
-#        self.helper.form_class = 'form-horizontal'
-#
-#        # set form field properties
-#        self.helper.help_text_inline = True
-#        self.helper.html5_required = True
-#        self.helper.label_class = 'col-sm-2 control-label'
-#        self.helper.field_class = 'col-sm-10'
-#
-#        # add buttons
-#        self.helper.layout[-1] = FormActions(
-#            Submit('add_button', u'Зберегти', css_class="btn btn-primary"),
-#            Submit('cancel_button', u'Скасувати', css_class="btn btn-link"),
-#                                            )
+from ..util import paginate, get_current_group
 
 
 class ExamForm(ModelForm):
@@ -103,36 +78,6 @@ class ExamUpdateView(UpdateView):
 
 
 
-
-
-
-#class ExamAddForm(ModelForm):
-#    class Meta:
-#        model = Exam
-#    def __init__(self, *args, **kwargs):
-#        super(ExamAddForm, self).__init__(*args, **kwargs)
-#
-#        self.helper = FormHelper(self)
-#
-#        # set form tag attributes
-#        self.helper.form_action = reverse('exams_add')
-#        self.helper.form_method = 'POST'
-#        self.helper.form_class = 'form-horizontal'
-#
-#        # set form field properties
-#        self.helper.help_text_inline = True
-#        self.helper.html5_required = True
-#        self.helper.label_class = 'col-sm-2 control-label'
-#        self.helper.field_class = 'col-sm-10'
-#
-#        # add buttons
-#        self.helper.layout[-1] = FormActions(
-#            Submit('add_button', u'Додати', css_class="btn btn-primary"),
-#            Submit('cancel_button', u'Скасувати', css_class="btn btn-link"),
-#                                            )
-#
-
-
 class ExamAddView(CreateView):
     model = Exam
     template_name = 'students/create_update_exams.html'
@@ -169,7 +114,13 @@ class ExamDeleteView(DeleteView):
 
 
 def exams_list(request):
-    exams = Exam.objects.all()
+
+    current_group = get_current_group(request)
+    if current_group:
+        exams = Exam.objects.filter(name_group=current_group)
+    else:
+        exams = Exam.objects.all()
+    
     exams = exams.order_by('time_exam')
     if request.GET.get('order_by', '') == '':
         request.GET.order_by = 'time_exam'

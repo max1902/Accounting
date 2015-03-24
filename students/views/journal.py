@@ -9,7 +9,7 @@ from django.http import JsonResponse
 
 from ..models.students import Student
 from ..models.monthjournal import MonthJournal
-from ..util import paginate
+from ..util import paginate, get_current_group
 
 class JournalView(TemplateView):
     template_name = 'students/journal.html'
@@ -58,7 +58,11 @@ class JournalView(TemplateView):
             for d in range(1, number_of_days +1)]
 
         # витягуємо усіх студентів посортованих по
-        if kwargs.get('pk'):
+        current_group = get_current_group(self.request)
+        if current_group:
+            queryset = Student.objects.filter(student_group=current_group
+            ).order_by('last_name')
+        elif kwargs.get('pk'):
             queryset = [Student.objects.get(pk=kwargs['pk'])]
         else:
             queryset = Student.objects.all().order_by('last_name')

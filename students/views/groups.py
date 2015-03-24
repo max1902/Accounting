@@ -17,7 +17,7 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 from crispy_forms.bootstrap import FormActions
 
-from ..util import paginate
+from ..util import paginate, get_current_group
 
 class GroupForm(ModelForm):
     class Meta:
@@ -59,46 +59,15 @@ class GroupForm(ModelForm):
             submit,
             Submit('cancel_button', u'Скасувати', css_class="btn btn-link"),
         )
-    def clean_leader(self):
-
-        st = Student.objects.filter(student_group=self.instance)
-        if self.cleaned_data['leader'] not in list(st):
-            raise ValidationError(u'Староста повинен бути у своїй групі.',
-                    code='invalid')
-        return self.cleaned_data['leader']
-
-
+#    def clean_leader(self):
+#
+#        st = Student.objects.filter(student_group=self.instance)
+#        if self.cleaned_data['leader'] not in list(st):
+#            raise ValidationError(u'Староста повинен бути у своїй групі.',
+#                    code='invalid')
+#        return self.cleaned_data['leader']
 
 
-#Views for Groups
-#class GroupUpdateForm(ModelForm):
-#    class Meta:
-#        model = Group
-#    def __init__(self, *args, **kwargs):
-#        super(GroupUpdateForm, self).__init__(*args, **kwargs)
-#
-#        self.helper = FormHelper(self)
-#
-#        # set form tag attributes
-#        self.helper.form_action = reverse('groups_edit',
-#            kwargs={'pk': kwargs['instance'].id})
-#        self.helper.form_method = 'POST'
-#        self.helper.form_class = 'form-horizontal'
-#
-#        # set form field properties
-#        self.helper.help_text_inline = True
-#        self.helper.html5_required = True
-#        self.helper.label_class = 'col-sm-2 control-label'
-#        self.helper.field_class = 'col-sm-10'
-#
-#        # add buttons
-#        self.helper.layout[-1] = FormActions(
-#            Submit('add_button', u'Зберегти', css_class="btn btn-primary"),
-#            Submit('cancel_button', u'Скасувати', css_class="btn btn-link"),
-#                                            )
-#
-#
-#
 
 class GroupUpdateView(UpdateView):
     model = Group
@@ -122,46 +91,6 @@ class GroupUpdateView(UpdateView):
 
 
 
-
-
-
-#class GroupAddForm(ModelForm):
-#    class Meta:
-#        model = Group
-#    def __init__(self, *args, **kwargs):
-#        super(GroupAddForm, self).__init__(*args, **kwargs)
-#
-#        self.helper = FormHelper(self)
-#
-#        # set form tag attributes
-#        self.helper.form_action = reverse('groups_add')
-#        self.helper.form_method = 'POST'
-#        self.helper.form_class = 'form-horizontal'
-#
-#        # set form field properties
-#        self.helper.help_text_inline = True
-#        self.helper.html5_required = True
-#        self.helper.label_class = 'col-sm-2 control-label'
-#        self.helper.field_class = 'col-sm-10'
-#
-#        # add buttons
-#        self.helper.layout[-1] = FormActions(
-#            Submit('add_button', u'Додати', css_class="btn btn-primary"),
-#            Submit('cancel_button', u'Скасувати', css_class="btn btn-link"),
-#                                            )
-#    def clean_student_group(self):
-#        """Check if student is leader in any group.
-#        If yes, then ensure it's the same as selected group."""
-#        # get group where current student is a leader
-##        students = Student.objects.all()
-##        if students.first_name in self.cleaned_data['title']:
-##            raise ValidationError(u'Студент все ще є у групі.', code='invalid')
-#        groups = Group.objects.filter(leader=self.instance)
-#        if len(groups) > 0 and self.cleaned_data['student_group'] != groups[0]:
-#            raise ValidationError(u'Студент є старостою іншої групи.',
-#                    code='invalid')
-#        return self.cleaned_data['student_group']
-#
 
 class GroupAddView(CreateView):
     model = Group
@@ -204,10 +133,12 @@ class GroupDeleteView(DeleteView):
 
 
 def groups_list(request):
-    groups = Group.objects.all()
-    #order_by sort
-    if request.path =='/groups/':
-        groups = groups.order_by('leader')
+
+    current_group = get_current_group(request)
+    if current_group:
+        groups = Group.objects.filter(id=current_group.id)
+    else:
+        groups = Group.objects.all()
     order_by = request.GET.get('order_by','')
     if order_by in ('title','leader','id'):
         groups = groups.order_by(order_by)
