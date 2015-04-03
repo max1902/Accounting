@@ -44,7 +44,9 @@ th.day-header {
     vertical-align: middle !important;
     text-align: center;
 }
-
+#ajax-loader {
+    display:none;
+}
 #ajax-progress-indicator {
     display: none;
 }

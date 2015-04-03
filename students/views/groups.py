@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-
-
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
@@ -68,7 +66,6 @@ class GroupForm(ModelForm):
 #        return self.cleaned_data['leader']
 
 
-
 class GroupUpdateView(UpdateView):
     model = Group
     template_name = 'students/create_update_groups.html'
@@ -88,8 +85,6 @@ class GroupUpdateView(UpdateView):
                 u'%s?status_message=Редагування групи відмінено' % reverse('home'))
         else:
             return super(GroupUpdateView, self).post(request, *args, **kwargs)
-
-
 
 
 class GroupAddView(CreateView):
@@ -115,11 +110,6 @@ class GroupAddView(CreateView):
                                 % reverse('home'))
         else:
             return super(GroupAddView, self).post(request, *args, **kwargs)
-
-
-
-
-
 
 
 class GroupDeleteView(DeleteView):
@@ -152,8 +142,3 @@ def groups_list(request):
 def groups_add(request):
     
     return HttpResponse('<h1>Group Add Form</h1>')
-
-
-
-
-

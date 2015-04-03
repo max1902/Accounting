@@ -11,6 +11,7 @@ from crispy_forms.layout import Submit
 from crispy_forms.bootstrap import FormActions
 from django.views.generic import UpdateView, CreateView, DeleteView
 from ..models.students import Student
+from ..models.groups import Group
 
 from ..util import paginate, get_current_group
 
@@ -51,6 +52,7 @@ class ExamForm(ModelForm):
         else:
             submit = Submit('save_button', u'Зберегти',
                 css_class="btn btn-primary")
+
         self.helper.layout[-1] = FormActions(
             submit,
             Submit('cancel_button', u'Скасувати', css_class="btn btn-link"),
@@ -85,14 +87,15 @@ class ExamAddView(CreateView):
     error_msg = u'Додавання екзамену скасовано'
 
     def get_success_url(self):
+        #import pdb; pdb.set_trace()
         name_subject = unicode.encode(self.request.POST.get(u'name_subject', ''), 'utf8')
-        success_message = 'Екзамен %s  успішно додано!' % (title)
+        success_message = 'Екзамен %s  успішно додано!' % (name_subject)
         messages.success(self.request, success_message)
-        return u'%s?status_message=Екзамен %s успішно додана' % (reverse('home'),
+        return u'%s?status_message=Екзамен %s успішно додано' % (reverse('home'),
             self.request.POST.get('name_subject', False))
 
     def post(self, request, *args, **kwargs):
-
+        #import pdb; pdb.set_trace()
         if request.POST.get('cancel_button'):
             messages.success(self.request, self.error_msg)
 

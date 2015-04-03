@@ -15,18 +15,26 @@ class Exam(models.Model):
     teacher = models.CharField(
         max_length=50,
         verbose_name=u"Викладач",
-        blank=True,
+        blank=False,
         null=True)
 
+    
     time_exam = models.DateTimeField(
         blank=False,
         verbose_name=u"Час екзамену",
         null=True)
-   
+
     name_group = models.ForeignKey('Group',
         verbose_name=u"Назва групи",
         blank=False,
         null=True)
+
+    notes_exam = models.CharField(
+        max_length=50,
+        blank=True,
+        verbose_name=u"Додаткові нотатки",
+        null=True)
+    
 
 #    def __unicode__(self):
 #        if self.leader:

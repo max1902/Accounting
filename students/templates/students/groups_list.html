@@ -9,7 +9,7 @@
 {% block content %}
 
 <!-- Add Group Button -->
-	<a class="btn btn-primary" href="{% url 'groups_add' %}">Додати Групу</a>
+	<a class="btn btn-primary" href="{% url 'groups_add' %}" id="add_group">Додати Групу</a>
 <!-- End Group Button -->
 
 
@@ -58,8 +58,8 @@
             {{ forloop.counter }}
         {% endif %}
         </td>
-		<td><a title="Редагувати" href="{% url 'groups_edit' group.id %}">{{ group.title }}</a></td>
-		<td><a title="Редагувати" href="{% url 'groups_edit' group.id %}">{{ group.leader }}</a></td>
+		<td><a title="Редагувати" href="{% url 'groups_edit' group.id %}" class="group-edit-form-link">{{ group.title }}</a></td>
+		<td><a title="Редагувати" href="{% url 'groups_edit' group.id %}" class="group-edit-form-link">{{ group.leader }}</a></td>
 		<td>
 		  <div class="dropdown">
 		    <button class="btn btn-default dropdown-toggle"
@@ -71,7 +71,7 @@
 			  <a role="menuitem" tabindex="-1"  href="#">Відвідування</a>
 			</li>
 			<li role="presentation">
-			  <a role="menuitem" tabindex="-1"  href="{% url 'groups_edit' group.id %}">Редагувати</a>
+			  <a role="menuitem" tabindex="-1"  href="{% url 'groups_edit' group.id %}" class="group-edit-form-link">Редагувати</a>
 			</li>
 			<li role="presentation">
 			  <a role="menuitem" tabindex="-1"  href="{% url 'groups_delete' group.id %}">Видалити</a>
@@ -88,11 +88,6 @@
 {% with object_list=groups %}
 {% include "students/pagination.html" %}
 {% endwith %}
-
-
-<!-- End Navigation -->
-
-<!-- End Groups Listing -->	  	
 
 {% endblock content %}
 

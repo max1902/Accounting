@@ -9,7 +9,7 @@
 {% block content %}
 
 <!-- Add Group Button -->
-	<a class="btn btn-primary" href="{% url 'exams_add' %}">Додати іспит</a>
+	<a class="btn btn-primary" id="add_exam" href="{% url 'exams_add' %}">Додати іспит</a>
 <!-- End Group Button -->
 
 <!-- Start Groups Listing -->
@@ -72,11 +72,11 @@
                 {{ forloop.counter }}
             {% endif %}
         </td>
-		<td><a title="Редагувати" href="{% url 'exams_edit' exam.id %}">{{ exam.name_subject }}</a></td>
-		<td><a title="Редагувати" href="{% url 'exams_edit' exam.id %}">{{ exam.teacher }}</a></td>
-        <td><a title="Редагувати" href="{% url 'exams_edit' exam.id %}">{{ exam.time_exam }}</a></td>
-        <td><a title="Редагувати" href="{% url 'exams_edit' exam.id %}">{{ exam.name_group }}</a></td>
-		<td>
+		<td><a title="Редагувати" href="{% url 'exams_edit' exam.id %}" class="student-edit-form-link">{{ exam.name_subject }}</a></td>
+		<td><a title="Редагувати" href="{% url 'exams_edit' exam.id %}" class="student-edit-form-link">{{ exam.teacher }}</a></td>
+        <td><a title="Редагувати" href="{% url 'exams_edit' exam.id %}" class="student-edit-form-link">{{ exam.time_exam }}</a></td>
+        <td><a title="Редагувати" href="{% url 'exams_edit' exam.id %}" class="student-edit-form-link">{{ exam.name_group }}</a></td>
+        <td>
 		  <div class="dropdown">
 		    <button class="btn btn-default dropdown-toggle"
 		        type="button" data-toggle="dropdown">Дія
@@ -87,7 +87,7 @@
 			  <a role="menuitem" tabindex="-1"  href="#">Відвідування</a>
 			</li>
 			<li role="presentation">
-			  <a role="menuitem" tabindex="-1"  href="{% url 'exams_edit' exam.id %}">Редагувати</a>
+			  <a role="menuitem" tabindex="-1"  href="{% url 'exams_edit' exam.id %}" class="student-edit-form-link">Редагувати</a>
 			</li>
 			<li role="presentation">
 			  <a role="menuitem" tabindex="-1"  href="{% url 'exams_delete' exam.id %}">Видалити</a>
