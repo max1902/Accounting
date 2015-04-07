@@ -53,3 +53,6 @@ th.day-header {
 #error-ajax {
     display: none;
 }
+#ajax-loader2 {
+    display:none;
+}

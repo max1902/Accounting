@@ -74,7 +74,7 @@
 
 <!-- Start SubHeader -->
     <div class="row" id="sub-header">
-      <div class="col-xs-12">
+      <div class="col-xs-12" id="menu">
 	<ul class="nav nav-tabs" role="tablist">
        {% url "home" as root_path %}
           <li role="presentation"  {% if request.path == root_path %} class="active"{% endif %}><a href="{% url "home"  %}" id="refresh">Студенти</a></li>

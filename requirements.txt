@@ -1,5 +1,13 @@
 Django==1.7.1
-Pillow
-MySQL-python
+MySQL-python==1.2.5
+Pillow==2.6.1
+argparse==1.2.1
+dj-database-url==0.3.0
+django-contact-form==1.0
 django-crispy-forms==1.4.0
-python-dateutil
+gunicorn==19.3.0
+python-dateutil==2.4.1
+six==1.9.0
+whitenoise==1.0.6
+wsgiref==0.1.2
+psycopg2==2.5.4
