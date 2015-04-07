@@ -1,5 +1,5 @@
-#import os
-#BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+import os
+BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 DATABASES = {
     'default': {

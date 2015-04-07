@@ -66,7 +66,6 @@ CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 from .db import DATABASES
 
-
 LANGUAGE_CODE = 'uk'
 
 TIME_ZONE = 'UTC'
@@ -77,33 +76,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-STATIC_ROOT = 'staticfiles'
 STATIC_URL = '/static/'
-STATICFILES_DIRS = (
-        os.path.join(BASE_DIR, 'static'),
-    )
-
-# Simplified static file serving.
-# https://warehouse.python.org/project/whitenoise/
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, '..', 'media')
-
-import dj_database_url
-DATABASES['default'] =  dj_database_url.config()
-
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-
-ALLOWED_HOSTS = ['*']
-
-STATIC_ROOT = 'staticfiles'
-
-DEBUG = False
-
-try:
-    from .local_settings import *
-except ImportError:
-    pass
-
-
