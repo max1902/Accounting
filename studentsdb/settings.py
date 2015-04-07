@@ -3,32 +3,7 @@ from django.conf import global_settings
 
 import os
 
-
-# Enable Connection Pooling
-DATABASES = {
-    'default': {
-        'ENGINE': 'django_postgrespool'}}
-
-import dj_database_url
-
-# Parse database configuration from $DATABASE_URL
-#DATABASES = {'default': dj_database_url.parse('postgres://...')}
-#HEROKU_POSTGRESQL_ONYX_URL = 'postgres://...'
-
-# Honor the 'X-Forwarded-Proto' header for request.is_secure()
-#SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-
-# Allow all host headers
-#ALLOWED_HOSTS = ['*']
-
-DATABASES['default'] = dj_database_url.config()
-DATABASES['default']['ENGINE'] = 'django_postgrespool'
-
-
-
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-
-
 
 TEMPLATE_CONTEXT_PROCESSORS = \
     global_settings.TEMPLATE_CONTEXT_PROCESSORS + ("django.core.context_processors.request",
@@ -57,7 +32,6 @@ EMAIL_HOST_USER = 'prokazamax@gmail.com'
 EMAIL_HOST_PASSWORD = 'Eae5cYEd1K-6S87juC9e5g'
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
-
 
 
 # Application definition
@@ -115,4 +89,21 @@ STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, '..', 'media')
+
+import dj_database_url
+DATABASES['default'] =  dj_database_url.config()
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+ALLOWED_HOSTS = ['*']
+
+STATIC_ROOT = 'staticfiles'
+
+DEBUG = False
+
+try:
+    from .local_settings import *
+except ImportError:
+    pass
+
 
