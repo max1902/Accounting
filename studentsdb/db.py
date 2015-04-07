@@ -12,5 +12,6 @@ DATABASES = {
         'USER': 'students_db_user',
         'PASSWORD': '111111',
         'NAME': 'students_db',
+	
     }
 }

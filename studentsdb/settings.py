@@ -1,21 +1,6 @@
 
 from django.conf import global_settings
 
-
-import dj_database_url
-
-# Parse database configuration from $DATABASE_URL
-DATABASES = {'default': dj_database_url.parse('postgres://...')}
-HEROKU_POSTGRESQL_ONYX_URL = 'postgres://...'
-
-# Honor the 'X-Forwarded-Proto' header for request.is_secure()
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-
-# Allow all host headers
-ALLOWED_HOSTS = ['*']
-
-# Enable Connection Pooling
-DATABASES['default']['ENGINE'] = 'django_postgrespool'
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
@@ -38,7 +23,6 @@ DEBUG = True
 TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 
 ADMIN_EMAIL = 'prokazamax@gmail.com'
@@ -81,12 +65,6 @@ WSGI_APPLICATION = 'studentsdb.wsgi.application'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
-# Database
-# https://docs.djangoproject.com/en/1.7/ref/settings/#databases
-
-# Internationalization
-# https://docs.djangoproject.com/en/1.7/topics/i18n/
-
 from .db import DATABASES
 
 
@@ -100,25 +78,32 @@ USE_L10N = True
 
 USE_TZ = True
 
-#MESSAGE_TAGS = {45: 'first_name',
-#                55: 'last_name',
-#                65: 'birthday',
-#                75: 'ticket',
-#                85: 'student_group',
-#                95: 'photo'}
+import dj_database_url
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.7/howto/static-files/
-STATIC_ROOT = 'staticfiles'
-STATIC_URL = '/static/'
-STATICFILES_DIRS = (
+# Parse database configuration from $DATABASE_URL
+DATABASES = {'default': dj_database_url.parse('postgres://...')}
+HEROKU_POSTGRESQL_ONYX_URL = 'postgres://...'
+
+# Honor the 'X-Forwarded-Proto' header for request.is_secure()
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# Allow all host headers
+ALLOWED_HOSTS = ['*']
+
+# Enable Connection Pooling
+DATABASES['default']['ENGINE'] = 'django_postgrespool'
+
+
+    STATIC_ROOT = 'staticfiles'
+    STATIC_URL = '/static/'
+    STATICFILES_DIRS = (
         os.path.join(BASE_DIR, 'static'),
     )
 
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, '..', 'media')
-
 
