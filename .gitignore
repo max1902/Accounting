@@ -9,7 +9,6 @@ nbproject
 .gitignore~
 *.html~
 media/
-db.py
 students/fixtures/
 students/tests.py
 

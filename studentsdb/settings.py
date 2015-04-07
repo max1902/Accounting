@@ -1,4 +1,4 @@
-from .db import DATABASES
+
 from django.conf import global_settings
 
 
@@ -86,6 +86,9 @@ CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
+
+from .db import DATABASES
+
 
 LANGUAGE_CODE = 'uk'
 
