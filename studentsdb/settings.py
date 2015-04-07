@@ -1,9 +1,34 @@
 
 from django.conf import global_settings
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+
+
+# Enable Connection Pooling
+DATABASES = {
+    'default': {
+        'ENGINE': 'django_postgrespool'}}
+
+import dj_database_url
+
+# Parse database configuration from $DATABASE_URL
+#DATABASES = {'default': dj_database_url.parse('postgres://...')}
+#HEROKU_POSTGRESQL_ONYX_URL = 'postgres://...'
+
+# Honor the 'X-Forwarded-Proto' header for request.is_secure()
+#SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# Allow all host headers
+#ALLOWED_HOSTS = ['*']
+
+DATABASES['default'] = dj_database_url.config()
+DATABASES['default']['ENGINE'] = 'django_postgrespool'
+
+
+
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+
+
 
 TEMPLATE_CONTEXT_PROCESSORS = \
     global_settings.TEMPLATE_CONTEXT_PROCESSORS + ("django.core.context_processors.request",
@@ -77,22 +102,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
-import dj_database_url
-
-# Parse database configuration from $DATABASE_URL
-DATABASES = {'default': dj_database_url.parse('postgres://...')}
-HEROKU_POSTGRESQL_ONYX_URL = 'postgres://...'
-
-# Honor the 'X-Forwarded-Proto' header for request.is_secure()
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-
-# Allow all host headers
-ALLOWED_HOSTS = ['*']
-
-# Enable Connection Pooling
-DATABASES['default']['ENGINE'] = 'django_postgrespool'
-
 
 STATIC_ROOT = 'staticfiles'
 STATIC_URL = '/static/'
