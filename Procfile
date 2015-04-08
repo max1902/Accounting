@@ -1,2 +1,2 @@
-web: gunicorn mystudentdb.wsgi:application
+web: gunicorn studentsdb.wsgi:application
 
