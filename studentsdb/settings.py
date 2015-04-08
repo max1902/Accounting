@@ -78,7 +78,7 @@ USE_TZ = True
 
 import dj_database_url
 
-DATABASES['default'] = dj_database_url.config()
+#DATABASES['default'] = dj_database_url.config()
 DATABASES = {'default': dj_database_url.parse('postgres://...')}
 HEROKU_POSTGRESQL_ONYX_URL = 'postgres://...'
 

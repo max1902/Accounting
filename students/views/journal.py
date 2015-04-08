@@ -104,7 +104,7 @@ class JournalView(TemplateView):
                     'update_url': update_url,
                     })
         # застосуємо пагінацію до списку студентів
-        context = paginate(students, 10, self.request, context,
+        context = paginate(students, 5, self.request, context,
                 var_name='students')
 
         # повертаємо оновлений словник із даними
