@@ -6,7 +6,7 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
-from contact_form.forms import ContactForm
+#from contact_form.forms import ContactForm
 #as CForms
 from django.views.generic.edit import FormView
 from studentsdb.settings import ADMIN_EMAIL

@@ -40,12 +40,6 @@ class GroupFormAdmin(ModelForm):
             return self.cleaned_data['None']
         return self.cleaned_data['leader']
         
-        
-        
-        
-
-
-
 
 class StudentAdmin(admin.ModelAdmin):
     list_display = ['last_name', 'first_name', 'ticket', 'student_group']
