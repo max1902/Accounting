@@ -21,7 +21,7 @@ class StudentFormAdmin(ModelForm):
         # get group where current student is a leader
         #import pdb; pdb.set_trace()
         groups = Group.objects.filter(leader=self.instance)
-        print groups
+        
         if len(groups) > 0 and self.cleaned_data['student_group'] != groups[0]:
             raise ValidationError(u'Студент є старостою іншої групи.',
                     code='invalid')

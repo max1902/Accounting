@@ -76,30 +76,30 @@ USE_L10N = True
 
 USE_TZ = True
 
-import dj_database_url
+#import dj_database_url
 
-DATABASES['default'] = dj_database_url.config()
-DATABASES = {'default': dj_database_url.parse('postgres://...')}
-HEROKU_POSTGRESQL_ONYX_URL = 'postgres://...'
-
-
-
-DATABASES['default']['ENGINE'] = 'django_postgrespool'
+#DATABASES['default'] = dj_database_url.config()
+#DATABASES = {'default': dj_database_url.parse('postgres://...')}
+#HEROKU_POSTGRESQL_ONYX_URL = 'postgres://...'
 
 
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-ALLOWED_HOSTS = ['*']
-STATIC_ROOT = 'staticfiles'
+#DATABASES['default']['ENGINE'] = 'django_postgrespool'
+
+
+#SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+#ALLOWED_HOSTS = ['*']
+#STATIC_ROOT = 'staticfiles'
 STATIC_URL = '/static/'
-STATICFILES_DIRS = (
-        os.path.join(BASE_DIR, 'static'),
-    )
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+#STATICFILES_DIRS = (
+#        os.path.join(BASE_DIR, 'static'),
+#    )
+#STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, '..', 'media')
 
-try:
-    from .db import *
-except ImportError:
-    pass
+#try:
+#    from .db import *
+#except ImportError:
+#    pass

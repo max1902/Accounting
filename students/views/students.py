@@ -61,7 +61,7 @@ class StudentForm(ModelForm):
         self.helper.layout[-1] = FormActions(
             Submit('add_button', u'Зберегти', css_class="btn btn-primary"),
             Submit('cancel_button', u'Скасувати', css_class="btn btn-link"),
-)
+            )
         self.helper.layout[-1] = FormActions(
             submit,
             Submit('cancel_button', u'Скасувати', css_class="btn btn-link"),
@@ -70,7 +70,9 @@ class StudentForm(ModelForm):
 #        """Check if student is leader in any group.
 #        If yes, then ensure it's the same as selected group."""
 #        # get group where current student is a leader
+#
 #        groups = Group.objects.filter(leader=self.instance)
+#        import pdb; pdb.set_trace()
 #        if len(groups) > 0 and self.cleaned_data['student_group'] != groups[0]:
 #            raise ValidationError(u'Студент є старостою іншої групи.',
 #                    code='invalid')
