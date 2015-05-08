@@ -1,6 +1,8 @@
 *.pyc
 *.idea/
 local_settings.py
+Procfile.txt
+Procfile*.txt
 nbproject
 *.txt~
 *.css~
