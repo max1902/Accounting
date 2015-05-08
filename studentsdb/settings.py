@@ -1,6 +1,6 @@
 
 from django.conf import global_settings
-
+from .db import DATABASES, from .db import DATABASES, EMAIL_HOST_PASSWORD
 import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
@@ -29,7 +29,6 @@ ADMIN_EMAIL = 'prokazamax@gmail.com'
 EMAIL_HOST = 'smtp.mandrillapp.com'
 EMAIL_PORT = '587'
 EMAIL_HOST_USER = 'prokazamax@gmail.com'
-EMAIL_HOST_PASSWORD = 'Eae5cYEd1K-6S87juC9e5g'
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 
@@ -64,7 +63,7 @@ WSGI_APPLICATION = 'studentsdb.wsgi.application'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
-from .db import DATABASES
+
 
 LANGUAGE_CODE = 'uk'
 
